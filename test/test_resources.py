@@ -4,8 +4,6 @@ from adif_mcp.resources import (
     get_adif_catalog,
     get_adif_meta,
     get_manifest_schema,
-    list_providers,
-    load_provider,
 )
 
 
@@ -21,12 +19,12 @@ def test_adif_catalog_fields_nonempty() -> None:
     assert isinstance(cat.get("fields"), list) and cat["fields"]
 
 
-def test_list_and_load_provider() -> None:
-    """TODO: add docstrings for: test list and load provilages"""
-    provs = list_providers()
-    assert {"eqsl", "lotw", "qrz", "clublog"}.issubset(set(provs))
-    eqsl = load_provider("eqsl")
-    assert "fields" in eqsl
+# def test_list_and_load_provider() -> None:
+#     """TODO: add docstrings for: test list and load provilages"""
+#     provs = list_providers()
+#     assert {"eqsl", "lotw", "qrz", "clublog"}.issubset(set(provs))
+#     eqsl = load_provider("eqsl")
+#     assert "fields" in eqsl
 
 
 def test_manifest_schema_shape() -> None:

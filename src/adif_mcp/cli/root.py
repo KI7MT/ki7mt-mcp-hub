@@ -10,7 +10,7 @@ import importlib.metadata
 import sys
 from typing import Callable, Protocol, cast
 
-from . import convert_adi, creds, eqsl_stub, persona, provider, validate
+from . import validate
 
 
 class _RegisterCLI(Protocol):
@@ -38,33 +38,37 @@ def build_parser() -> argparse.ArgumentParser:
     )
 
     # convert + alias
-    p_conv = subparsers.add_parser(
-        "convert",
-        help="Convert ADIF to JSON/NDJSON",
-        description="Convert ADIF (.adi) to QsoRecord JSON/NDJSON.",
-        formatter_class=argparse.ArgumentDefaultsHelpFormatter,
-    )
-    convert_adi.add_convert_args(p_conv)
-    p_conv.set_defaults(func=lambda _args: convert_adi.main(sys.argv[2:]))
+    # p_conv = subparsers.add_parser(
+    #     "convert",
+    #     help="Convert ADIF to JSON/NDJSON",
+    #     description="Convert ADIF (.adi) to QsoRecord JSON/NDJSON.",
+    #     formatter_class=argparse.ArgumentDefaultsHelpFormatter,
+    # )
+    # convert_adi.add_convert_args(p_conv)
+    # p_conv.set_defaults(func=lambda _args: convert_adi.main(sys.argv[2:]))
 
-    p_conv_alias = subparsers.add_parser(
-        "convert-adi",
-        help="(alias) Convert ADIF to JSON/NDJSON",
-        description="Convert ADIF (.adi) to QsoRecord JSON/NDJSON.",
-        formatter_class=argparse.ArgumentDefaultsHelpFormatter,
-    )
-    convert_adi.add_convert_args(p_conv_alias)
-    p_conv_alias.set_defaults(func=lambda _args: convert_adi.main(sys.argv[2:]))
+    # p_conv_alias = subparsers.add_parser(
+    #     "convert-adi",
+    #     help="(alias) Convert ADIF to JSON/NDJSON",
+    #     description="Convert ADIF (.adi) to QsoRecord JSON/NDJSON.",
+    #     formatter_class=argparse.ArgumentDefaultsHelpFormatter,
+    # )
+    # convert_adi.add_convert_args(p_conv_alias)
+    # p_conv_alias.set_defaults(func=lambda _args: convert_adi.main(sys.argv[2:]))
 
     # persona / provider / creds / eqsl
-    if hasattr(persona, "register_cli"):
-        cast(_RegisterCLI, getattr(persona, "register_cli"))(subparsers)
-    if hasattr(provider, "register_cli"):
-        cast(_RegisterCLI, getattr(provider, "register_cli"))(subparsers)
-    if hasattr(creds, "register_cli"):
-        cast(_RegisterCLI, getattr(creds, "register_cli"))(subparsers)
-    if hasattr(eqsl_stub, "register_cli"):
-        cast(_RegisterCLI, getattr(eqsl_stub, "register_cli"))(subparsers)
+    # if hasattr(persona, "register_cli"):
+    #     cast(_RegisterCLI, getattr(persona, "register_cli"))(subparsers)
+
+    # if hasattr(provider, "register_cli"):
+    #     cast(_RegisterCLI, getattr(provider, "register_cli"))(subparsers)
+
+    # if hasattr(creds, "register_cli"):
+    #     cast(_RegisterCLI, getattr(creds, "register_cli"))(subparsers)
+
+    # if hasattr(eqsl_stub, "register_cli"):
+    #     cast(_RegisterCLI, getattr(eqsl_stub, "register_cli"))(subparsers)
+
     if hasattr(validate, "register_cli"):
         cast(_RegisterCLI, getattr(validate, "register_cli"))(subparsers)
 
@@ -99,8 +103,8 @@ def main(argv: list[str] | None = None) -> int:
     parser = build_parser()
 
     # Default to `convert` if no subcommand was provided
-    if not args_in:
-        return convert_adi.main([])
+    # if not args_in:
+    #     return convert_adi.main([])
 
     args = parser.parse_args(args_in)
     func = cast(Callable[[argparse.Namespace], int] | None, getattr(args, "func", None))

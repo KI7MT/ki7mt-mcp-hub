@@ -18,9 +18,9 @@ def test_validate_help() -> None:
     assert "manifest" in r.stdout.lower()
 
 
-def test_convert_help() -> None:
-    """Test the help message for the convert command."""
-    r1 = shell("adif-mcp convert --help")
-    r2 = shell("adif-mcp convert-adi --help")
-    assert r1.exit_code == 0
-    assert r2.exit_code == 0
+# def test_convert_help() -> None:
+#     """Test the help message for the convert command."""
+#     r1 = shell("adif-mcp convert --help")
+#     r2 = shell("adif-mcp convert-adi --help")
+#     assert r1.exit_code == 0
+#     assert r2.exit_code == 0
