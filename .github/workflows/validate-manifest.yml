@@ -3,10 +3,12 @@ name: validate-manifest
 on:
   push:
     branches: [ main ]
+    # Broaden this to ensure it runs during testing
     paths:
       - '**/manifest.json'
-      - '.github/scripts/validate_manifest.py'
-  workflow_dispatch:
+      - '.github/scripts/**'
+      - '.github/workflows/validate-manifest.yml'
+  workflow_dispatch: # Allows manual execution
 
 jobs:
   validate:
@@ -24,9 +26,9 @@ jobs:
           python-version: '3.12'
 
       - name: Sync Dependencies
-        # Use the same simple sync that fixed the docs
+        # Standard sync (no groups) to match your clean root
         run: uv sync
 
       - name: Run Manifest Validation
-        # This uses the ruff/python environment defined in your root
+        # This will run even if you only changed the workflow itself
         run: uv run python .github/scripts/validate_manifest.py
