@@ -36,7 +36,7 @@ jobs:
 
       - name: Sync Global Docs Deps
         # We run this at the root level to install MkDocs/Mermaid
-        run: uv sync --group dev
+        run: uv sync
 
       - name: Assert mermaid plugin present
         run: uv run python -c "import mermaid2; print('mermaid2 OK')"
