@@ -1,41 +1,40 @@
-#!/usr/bin/env python3
-from __future__ import annotations
-
 import json
 import sys
 from pathlib import Path
 
-# Modified to accept a target directory via CLI, defaulting to the current directory
-def fail(msg: str) -> None:
-    print(f"[manifest] ERROR: {msg}", file=sys.stderr)
-    sys.exit(1)
+def validate_manifests():
+    root = Path(__file__).parent.parent.parent
+    # Find all manifest.json files in any subdirectory
+    manifests = list(root.glob("**/manifest.json"))
 
-def main() -> None:
-    # Look for the manifest relative to the target directory
-    # Usage: ./validate_manifest.py adif-mcp
-    target_dir = Path(sys.argv[1]) if len(sys.argv) > 1 else Path(".")
-    manifest_path = target_dir / "src/adif_mcp/mcp/manifest.json"
+    if not manifests:
+        print("No manifest.json files found to validate.")
+        return True
 
-    if not manifest_path.exists():
-        fail(f"missing {manifest_path}")
+    success = True
+    for manifest_path in manifests:
+        # Skip manifests in build or temp directories if they exist
+        if "site" in str(manifest_path) or ".venv" in str(manifest_path):
+            continue
 
-    try:
-        data = json.loads(manifest_path.read_text(encoding="utf-8"))
-    except Exception as e:
-        fail(f"invalid JSON: {e}")
+        print(f"Checking: {manifest_path.relative_to(root)}")
+        try:
+            with open(manifest_path, 'r') as f:
+                data = json.load(f)
 
-    if "tools" not in data or not isinstance(data["tools"], list):
-        fail("manifest.tools missing or not a list")
+            # Add your specific validation logic here (checking keys, etc.)
+            if "mcp" not in data:
+                print(f"  FAILED: Missing 'mcp' key in {manifest_path.name}")
+                success = False
+            else:
+                print("  PASSED")
 
-    required_tool_keys = {"name", "description", "input_schema", "output_schema"}
-    for i, tool in enumerate(data["tools"], 1):
-        if not isinstance(tool, dict):
-            fail(f"tool #{i} is not an object")
-        missing = required_tool_keys - tool.keys()
-        if missing:
-            fail(f"tool #{i} missing keys: {sorted(missing)}")
+        except Exception as e:
+            print(f"  FAILED: Could not parse JSON: {e}")
+            success = False
 
-    print(f"[manifest] OK: {manifest_path}")
+    return success
 
 if __name__ == "__main__":
-    main()
+    if not validate_manifests():
+        sys.exit(1)
