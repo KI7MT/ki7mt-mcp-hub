@@ -1,10 +1,10 @@
 [project]
 name = "ki7mt-mcp-hub"
 version = "0.1.0"
-description = "Global Documentation and MCP Hub"
+description = "Global Documentation Hub"
 requires-python = ">=3.10"
 
-# Keep all your established documentation tools here 
+# Only the tools required to build the documentation site
 dependencies = [
     "mkdocs>=1.6.1",
     "mkdocs-material>=9.6.18",
@@ -16,15 +16,5 @@ dependencies = [
     "mkdocs-git-revision-date-localized-plugin>=1.4.7",
 ]
 
-# Add this section to satisfy the 'uv sync --group dev' call in CI 
-[dependency-groups]
-dev = [
-    { include-group = "dependencies" }, 
-    "ruff",
-    "mypy",
-]
-
 [tool.uv]
 managed = true
-# This links your established silos to the Hub 
-workspace = { members = ["adif-mcp", "wspr-mcp"] }
