@@ -1,6 +1,6 @@
 [project]
 name = "ki7mt-mcp-hub"
-version = "0.5.5"
+version = "0.6.0"
 description = "Global Documentation Hub"
 requires-python = ">=3.12"
 

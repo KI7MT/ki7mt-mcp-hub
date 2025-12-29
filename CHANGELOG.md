@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file.
 
+
+## [0.6.0] - 2024-12-29
+
+### Fixed
+- **Packaging:** Resolved "hollow wheel" issue where source code was excluded from the distribution.
+- **Build System:** Explicitly mapped `src/adif_mcp` in `pyproject.toml` to ensure code inclusion in builds.
+- **Entry Points:** Standardized CLI entry points for `adif-mcp` to resolve `ModuleNotFoundError`.
+
+### Changed
+- Improved reliability for public installations via `uvx` and `pip`.
+
 ## 0.5.0 (2025-12-28)
 
 ### 🚀 Features

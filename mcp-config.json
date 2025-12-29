@@ -1,0 +1,13 @@
+{
+  "mcpServers": {
+    "adif-mcp": {
+      "command": "uv",
+      "args": [
+        "--quiet",
+        "run",
+        "--project", "./adif-mcp",
+        "python", "-m", "adif_mcp.mcp.server"
+      ]
+    }
+  }
+}
