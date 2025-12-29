@@ -1,5 +1,5 @@
-site_name: ADIF MCP
-site_description: ADIF MCP Documentation
+site_name: KI7MT Shack AI Hub
+site_description: Specialized micro-servers designed to turn local AI agents
 site_url: https://adif-mcp.com/
 repo_url: https://github.com/KI7MT/adif-mcp
 edit_uri: edit/main/docs/
