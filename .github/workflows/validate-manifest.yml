@@ -19,6 +19,13 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5
+
+      - name: Sync deps
+        # This can run at root if you have the root pyproject.toml we discussed
+        run: uv sync --group dev
+
       - name: Checkout
         uses: actions/checkout@v4
 
