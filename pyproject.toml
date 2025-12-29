@@ -1,8 +1,8 @@
 [project]
 name = "ki7mt-mcp-hub"
-version = "0.1.0"
+version = "0.5.5"
 description = "Global Documentation Hub"
-requires-python = ">=3.10"
+requires-python = ">=3.12"
 
 # Every plugin you need for a perfect MkDocs build
 dependencies = [
