@@ -4,10 +4,11 @@ requires-python = ">=3.10"
 
 [[package]]
 name = "adif-mcp"
-version = "0.4.4"
+version = "0.1.16"
 source = { editable = "." }
 dependencies = [
     { name = "aiofiles" },
+    { name = "anyio" },
     { name = "click" },
     { name = "jsonschema" },
     { name = "mcp" },
@@ -29,9 +30,10 @@ dev = [
 [package.metadata]
 requires-dist = [
     { name = "aiofiles", specifier = ">=25.1.0" },
+    { name = "anyio", specifier = ">=4.8.0" },
     { name = "click", specifier = ">=8.1.0" },
     { name = "jsonschema", specifier = ">=4.25.1" },
-    { name = "mcp", specifier = ">=0.1.0" },
+    { name = "mcp", specifier = ">=1.2.0" },
     { name = "typing-extensions" },
 ]
 

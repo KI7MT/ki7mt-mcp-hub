@@ -1,118 +1,72 @@
-# adif-mcp
+# ADIF-MCP
 
-Core [Model Context Protocol](https://modelcontextprotocol.io/) (MCP) service for **Amateur Radio Logging**, per [ADIF 3.1.6 specification](https://adif.org.uk/316/ADIF_316.htm)
+**Core [Model Context Protocol](https://modelcontextprotocol.io/) (MCP) service for Amateur Radio Logging.**
 
-> **Pretty Code • Pretty Output • Iterative Docs** - A simple mantra: keep the code clean, the output clear, and the docs evolving.
-
----
-
-## Resources
-
-[![Made with Python](https://img.shields.io/badge/Made%20with-Python-blue)](https://www.python.org/)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
-
-## Core Project Health
-![ADIF](https://img.shields.io/badge/ADIF-3.1.6-blue)
-[![GitHub release](https://img.shields.io/github/v/release/KI7MT/adif-mcp?display_name=tag)](https://github.com/KI7MT/adif-mcp/releases)
-[![GitHub tag](https://img.shields.io/github/v/tag/KI7MT/adif-mcp?sort=semver)](https://github.com/KI7MT/adif-mcp/tags)
-[![CI](https://github.com/KI7MT/adif-mcp/actions/workflows/ci.yml/badge.svg)](https://github.com/KI7MT/adif-mcp/actions/workflows/ci.yml)
-[![Docs](https://img.shields.io/badge/docs-github_pages-blue)](https://adif-mcp.com/)
-[![pre-commit](https://github.com/KI7MT/wspr-ai-lite/actions/workflows/pre-commit.yml/badge.svg)](https://github.com/KI7MT/wspr-ai-lite/actions/workflows/pre-commit.yml)
-[![Conventional Commits](https://img.shields.io/badge/Conventional%20Commits-1.0.0-yellow.svg)](https://conventionalcommits.org)
-[![SSL Certificate Expiry Check](https://github.com/KI7MT/adif-mcp/actions/workflows/ssl-expiry.yml/badge.svg)](https://github.com/KI7MT/adif-mcp/actions/workflows/ssl-expiry.yml)
-
-## MCP / API Readiness
-[![MCP](https://img.shields.io/badge/AI--Agent--Ready-MCP-green)](https://modelcontextprotocol.io/)
-[![API Docs](https://img.shields.io/badge/API-Schema-blue)](https://adif-mcp.com/mcp/manifest.html)
-[![JSON Schema](https://img.shields.io/badge/Schema-JSON--Schema-lightgrey)](#)
-[![Manifest Valid](https://github.com/KI7MT/adif-mcp/actions/workflows/validate-manifest.yml/badge.svg)](https://github.com/KI7MT/adif-mcp/actions/workflows/validate-manifest.yml)
-
-## Compliance and Program Registry
-[![ADIF 3.1.6](https://img.shields.io/badge/ADIF-3.1.6-blue?label=Spec)](#-compliance--provenance)
-[![Program ID](https://img.shields.io/badge/Program%20ID-Registered-success)](https://adif.org.uk/programids.html)
+[![PyPI version](https://img.shields.io/pypi/v/adif-mcp.svg)](https://pypi.org/project/adif-mcp/)
+[![Supported Python versions](https://img.shields.io/pypi/pyversions/adif-mcp.svg)](https://pypi.org/project/adif-mcp/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Documentation](https://img.shields.io/badge/docs-ki7mt.io-blue)](https://www.ki7mt.io/adif-mcp/)
 
 ---
 
-## Project Ethos
+## Overview
 
-ADIF-MCP is a community-driven effort.
-It is not intended to replace or compete with existing ADIF libraries, utilities, or logging applications. Instead, it provides a common foundation that others can build upon.
+`adif-mcp` is a spec-compliant engine built on the [ADIF 3.1.6 specification](https://adif.org.uk). It provides a unified, schema-driven foundation for Amateur Radio data, enabling safe and typed access for AI agents, logging applications, and web services.
 
-- Interoperability — a schema-driven, spec-compliant core that makes it easier for tools, logs, and services to talk to each other.
-- Extensibility — a plugin and integration framework for services like LoTW, eQSL, QRZ, and future platforms.
-- Collaboration — designed to complement, not fragment, the ecosystem of ADIF tools already enjoyed by the ham community.
-- Future-facing — introduces safe, typed access to ADIF data in contexts such as AI agents and MCP integrations, opening doors for innovation while preserving compatibility.
-
-Our goal is simple: support and enhance the Amateur Radio logging ecosystem while keeping the project open, transparent, and aligned with the spirit of the hobby.
+> **Pretty Code • Pretty Output • Iterative Docs**
 
 ---
 
-## Specifications & Standards
+## Features
 
-ADIF-MCP is built upon the official **Amateur Data Interchange Format (ADIF)**.
-
-* **Current Spec Version:** 3.1.6 (Released 2025-09-15)
-* **Source:** All field definitions, data types, and enumerations are derived from the official resources provided by the [ADIF Developers Group](https://adif.org.uk).
-* **Compliance:** This tool aims for 100% compliance with the ADIF 3.1.6 standard, including support for ADI and ADX formats.
-
-*Note: ADIF is a trademark of the ADIF Developers Group. This project is an independent implementation intended to support the amateur radio community.*
+- **Spec Compliance**: 100% alignment with ADIF 3.1.6 definitions and data types.
+- **MCP Native**: Exposes tools for validation, normalization, and record transformation to any MCP-compliant client.
+- **Service Ready**: Designed to host adapters for LoTW, eQSL, QRZ, and Clublog.
+- **Provenance**: Uses registered Program IDs (`ADIF-MCP`) and `APP_` fields to track record lineage.
 
 ---
 
-## ADIF-MCP Engines
+## Quick Start
 
-This package defines the ADIF MCP core engine, with plugins for:
-- LoTW (`adif-mcp-lotw`)
-- eQSL (`adif-mcp-eqsl`)
-- qrz  (`adif-mcp-qrz`)
-- clublog (`adif-mcp-clublog`)
+### Installation
+```bash
+uv add adif-mcp
+# or
+pip install adif-mcp
+```
 
-Performs these tasks
-- Validation & normalization of ADIF records
-- Unified schema for consistent QSO storage and exchange
-- MCP-ready tools for safe AI-agent access
-- Foundation for service adapters (e.g., LoTW, eQSL, Qrx, Clublog)
+### Usage as an MCP Tool
 
-🔑 Takeaway: MCP doesn’t replace LoTW, eQSL, Clublog, Qrz, or award / logging program(s). Instead, it gives operators visibility and accessibility into their award progress, across sponsors, without them needing to export, filter, or code.
+This package is intended to be run as an MCP server. Configure your client (like Claude Desktop) to point to the server entry point:
 
----
-
-## Why ADIF-MCP Matters
-
-Unlike existing ADIF editors and one-off utilities, ADIF-MCP is a shared protocol engine for the Amateur Radio community:
-- Spec-compliant & typed — ADIF fields are validated against the official standard.
-- Extensible — integrations (LoTW, eQSL, QRZ, Clublog, and other logging apps) plug into a common base.
-- AI-ready — exposes safe, typed tools to AI agents via the Model Context Protocol.
-- Foundation, not silo — one engine many apps can trust, instead of everyone re-implementing ADIF parsing.
-
-👉 ADIF-MCP turns ADIF from a static file format into a living protocol interface.
+```json
+{
+  "mcpServers": {
+    "adif-mcp": {
+      "command": "uvx",
+      "args": ["adif-mcp"]
+    }
+  }
+}
+```
 
 ---
 
-## Next Steps
-- Build `adif-mcp-lotw` and `adif-mcp-eqsl` adapters
-- Expose MCP tools for validation, award tracking, and service sync
-- Support cross-logger interoperability with AI-driven agents
+## Documentation & Compliance
 
-## Compliance & Provenance
+Full documentation, including API schemas and the Program ID policy, is available at our central hub:
+👉 **[https://www.ki7mt.io/adif-mcp/](https://www.google.com/url?sa=E&source=gmail&q=https://www.ki7mt.io/adif-mcp/)**
 
-ADIF-MCP and its plugins follow the [ADIF Specification](https://adif.org.uk) (currently 3.1.6) and use **registered Program IDs** to identify all exports:
+### Standard Support
 
-- `ADIF-MCP` — Core engine
-- `ADIF-MCP-LOTW` — Plugin for ARRL Logbook of The World
-- `ADIF-MCP-EQSL` — Plugin for eQSL.cc
-- `ADIF-MCP-QRZ` — Plugin for Qrz.com
-- `ADIF-MCP-CLUBLOG` — Plugin for Clublog.com
-- `ADIF-MCP-NEXT` — Whatever else operators want integrated
+* **Current Spec:** 3.1.6 (Released 2025-09-15)
+* **Registered Program ID:** `ADIF-MCP`
 
-To ensure transparency and auditability, the project also uses **APP_ fields** for provenance when augmenting records.
-Examples include:
+---
 
-- `APP_ADIF-MCP_OP` → operation performed (`normalize`, `validate`, `merge`)
-- `APP_ADIF-MCP-LOTW_ACTION` → LoTW plugin operation
-- `APP_ADIF-MCP-EQSL_TIME` → timestamp of eQSL merge
+## Community & Support
 
-See the [Program ID & APP_ Field Policy](docs/program-id-policy.md) for full details.
+* **Issues**: Report bugs or request features on our [GitHub Issue Tracker](https://www.google.com/search?q=https://github.com/ki7mt/ki7mt-mcp-hub/issues).
+* **Hub**: This project is part of the [KI7MT MCP Hub](https://github.com/ki7mt/ki7mt-mcp-hub).
 
-## License
-MIT — open and free for amateur radio use.
+*Note: ADIF is a trademark of the ADIF Developers Group. This project is an independent implementation.*

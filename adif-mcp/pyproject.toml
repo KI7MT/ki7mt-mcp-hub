@@ -1,20 +1,35 @@
 [project]
 name = "adif-mcp"
-version = "0.4.4"
-description = "Authoritative ADIF 3.1.6 validator and MCP server"
+version = "0.1.16"
+description = "ADIF MCP core service with eQSL demo tools"
+authors = [{ name = "KI7MT", email = "ki7mt@ki7mt.io" }]
+license = { text = "MIT" }
 readme = "README.md"
 requires-python = ">=3.10"
-authors = [
-    { name = "Greg Beam", email = "ki7mt@ki7mt.io" }
+# Add these for PyPI visibility
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Communications :: Ham Radio",
 ]
-# Strictly the dependencies for the Log Engine and MCP Gateway
 dependencies = [
-    "mcp>=0.1.0",
+    "anyio>=4.8.0",
+    "mcp>=1.2.0",
     "click>=8.1.0",
     "typing-extensions",
     "aiofiles>=25.1.0",
     "jsonschema>=4.25.1",
 ]
+
+[project.urls]
+Homepage = "https://www.ki7mt.io"
+Documentation = "https://www.ki7mt.io/adif-mcp/"
+Repository = "https://github.com/ki7mt/ki7mt-mcp-hub"
+Issues = "https://github.com/ki7mt/ki7mt-mcp-hub/issues"
 
 [project.scripts]
 adif-mcp = "adif_mcp.cli.root:main"
@@ -37,5 +52,3 @@ dev = [
     "types-aiofiles>=25.1.0.20251011",
     "types-jsonschema>=4.25.1.20251009",
 ]
-# We are NOT including a workspace section here.
-# This ensures this folder remains a self-contained silo.
