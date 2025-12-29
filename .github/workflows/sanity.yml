@@ -3,20 +3,23 @@ name: sanity-check
 on:
   push:
     branches: [ main ]
-  pull_request:
+    paths:
+      - '.github/workflows/sanity.yml'
+      - '.github/scripts/**'
+  workflow_dispatch:
 
 jobs:
-  hub-health:
+  sanity:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout repo
+      - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Hub Status Report
-        run: |
-          echo "✅ Hub Sanity Check: $(date)"
-          echo "-----------------------------------"
-          echo "Detecting Active Silos:"
-          ls -d */ | grep -v "docs" | grep -v "site"
-          echo "-----------------------------------"
-          echo "Check completed for ki7mt-mcp-hub."
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5
+
+      - name: Sync Dependencies
+        run: uv sync
+
+      - name: Global Lint Check
+        run: uv run ruff check .github/scripts/
