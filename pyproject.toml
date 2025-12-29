@@ -16,5 +16,11 @@ dependencies = [
     "mkdocs-git-revision-date-localized-plugin>=1.4.7",
 ]
 
+[dependency-groups]
+# Satisfies the 'uv sync --group dev' call with only the docs tools
+dev = [
+    { include-group = "dependencies" }
+]
+
 [tool.uv]
 managed = true
