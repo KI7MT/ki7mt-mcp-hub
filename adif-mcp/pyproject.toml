@@ -37,5 +37,5 @@ dev = [
     "types-aiofiles>=25.1.0.20251011",
     "types-jsonschema>=4.25.1.20251009",
 ]
-# We are NOT including a workspace section here. 
+# We are NOT including a workspace section here.
 # This ensures this folder remains a self-contained silo.

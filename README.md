@@ -16,5 +16,3 @@ All tools are powered by `uv` for zero-configuration deployment.
 # To run the ADIF validator:
 uvx adif-mcp
 ```
-
-

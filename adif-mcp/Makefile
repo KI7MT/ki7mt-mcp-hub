@@ -4,7 +4,7 @@
 PROJECT	?= "adif-mcp"
 PYTHON	?= python3
 
-# Updated Paths for the Silo structure 
+# Updated Paths for the Silo structure
 SRC_DIR     := src/adif_mcp
 SCRIPTS_DIR := scripts
 TEST_DIR    := test

@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: read
-    
+
     defaults:
       run:
         working-directory: ./adif-mcp
@@ -48,13 +48,13 @@ jobs:
           CUR_SHA="$(git rev-parse "$GITHUB_SHA")"
           # Look for previous tags at the Hub level
           PREV_TAG="$(git describe --tags --abbrev=0 --match 'v*' "${CUR_SHA}^" 2>/dev/null || true)"
-          
+
           if [ -z "$PREV_TAG" ]; then
             RANGE="${CUR_SHA}~1..${CUR_SHA}"
           else
             RANGE="${PREV_TAG}..${CUR_SHA}"
           fi
-          
+
           echo "Checking commits in range: $RANGE"
           uv run cz check --rev-range "$RANGE"
 

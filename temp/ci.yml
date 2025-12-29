@@ -16,7 +16,7 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: read
-    
+
     # Ensures all 'run' steps happen inside the silo folder
     defaults:
       run:
