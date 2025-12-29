@@ -3,6 +3,19 @@ description: Suggest a new idea or enhancement.
 labels: [enhancement]
 assignees: []
 body:
+  - type: dropdown
+    id: component
+    attributes:
+      label: Target Component
+      description: Which part of the MCP Hub should this feature be added to?
+      options:
+        - adif-mcp (Log Validator)
+        - wspr-mcp (Propagation Research)
+        - qrz-mcp (Callbook Lookup)
+        - hub-infrastructure (Global Docs/Actions)
+        - new-silo-proposal (Idea for a new tool)
+    validations:
+      required: true
   - type: textarea
     id: summary
     attributes:

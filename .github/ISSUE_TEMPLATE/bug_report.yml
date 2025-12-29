@@ -3,6 +3,18 @@ description: Report something that isn’t working correctly.
 labels: [bug]
 assignees: []
 body:
+  - type: dropdown
+    id: component
+    attributes:
+      label: Affected Component
+      description: Which part of the MCP Hub is this bug related to?
+      options:
+        - adif-mcp (Log Validator)
+        - wspr-mcp (Propagation Research)
+        - qrz-mcp (Callbook Lookup)
+        - hub-infrastructure (Global Docs/Actions)
+    validations:
+      required: true
   - type: textarea
     id: description
     attributes:
@@ -16,8 +28,8 @@ body:
       label: Steps To Reproduce
       description: How can we reproduce the issue?
       placeholder: |
-        1. Run `adif-mcp ingest ...`
-        2. Start the UI
+        1. cd <component-folder>
+        2. uv run <component-name> ...
         3. Observe the error
     validations:
       required: true
@@ -29,5 +41,5 @@ body:
   - type: input
     id: version
     attributes:
-      label: Version
-      description: Output of `adif-mcp --version`
+      label: Component Version
+      description: Provide the version (e.g., output of `adif-mcp --version`)

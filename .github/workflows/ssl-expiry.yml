@@ -1,31 +1,33 @@
 # .github/workflows/ssl_expiry.yml
-name: ssl_expiry
+name: ssl-expiry-watchdog
 
 on:
   schedule:
-    - cron: "17 2 * * *"   # nightly
-  workflow_dispatch:        # manual button
+    - cron: "17 2 * * *"   # Run nightly at 02:17
+  workflow_dispatch:        # Manual trigger
   push:
-    branches: [ main ]      # only main pushes
+    branches: [ main ]
+    paths:
+      - '.github/workflows/ssl-expiry.yml'
 
 jobs:
   check:
+    # Only run on main branch or manual trigger
     if: github.ref == 'refs/heads/main' || github.event_name != 'push'
     runs-on: ubuntu-latest
     env:
-      # Edit this list to match your domains/subdomains
+      # Updated domain list to match the "Grand Central Station" architecture
       DOMAINS: |
+        ki7mt.io
         adif-mcp.com
         www.adif-mcp.com
-        lotw.adif-mcp.com
-        eqsl.adif-mcp.com
       THRESHOLD_DAYS: "15"
     steps:
       - name: Show inputs
         run: |
-          echo "Domains to check:"
+          echo "Monitoring certificates for:"
           echo "${DOMAINS}"
-          echo "Threshold: ${THRESHOLD_DAYS} days"
+          echo "Alert threshold: ${THRESHOLD_DAYS} days"
 
       - name: Check certificate expiry
         id: check
@@ -35,6 +37,7 @@ jobs:
 
           NOW_EPOCH=$(date +%s)
           FAIL=0
+          printf "### 🛰️ SSL Expiry Report\n\n" >> "$GITHUB_STEP_SUMMARY"
           printf "| Domain | Not After (UTC) | Days Left |\n" >> "$GITHUB_STEP_SUMMARY"
           printf "|---|---:|---:|\n" >> "$GITHUB_STEP_SUMMARY"
 
@@ -53,7 +56,7 @@ jobs:
               continue
             fi
 
-            # Convert to epoch (GNU date on ubuntu-latest)
+            # Convert to epoch
             END_EPOCH=$(date -u -d "$ENDDATE_RAW" +%s)
             SECS_LEFT=$(( END_EPOCH - NOW_EPOCH ))
             DAYS_LEFT=$(( SECS_LEFT / 86400 ))
@@ -61,7 +64,7 @@ jobs:
             # Summary row
             printf "| %s | %s | %d |\n" "$DOMAIN" "$ENDDATE_RAW" "$DAYS_LEFT" >> "$GITHUB_STEP_SUMMARY"
 
-            # Hard fail if under threshold
+            # Alert if under threshold
             if (( DAYS_LEFT < THRESHOLD_DAYS )); then
               echo "WARN: $DOMAIN has ${DAYS_LEFT} day(s) left (< ${THRESHOLD_DAYS})."
               FAIL=1
@@ -69,8 +72,8 @@ jobs:
           done <<< "$DOMAINS"
 
           if (( FAIL > 0 )); then
-            echo "::error title=SSL expiry alert::One or more certs are below ${THRESHOLD_DAYS} days."
+            echo "::error title=SSL Expiry Alert::One or more domains are below ${THRESHOLD_DAYS} days."
             exit 1
           fi
 
-          echo "All certificates are healthy (>= ${THRESHOLD_DAYS} days)."
+          echo "All certificates are healthy."

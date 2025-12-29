@@ -1,0 +1,11 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Global Documentation
+    url: https://ki7mt.io/
+    about: Central documentation for all KI7MT MCP Hub projects.
+  - name: ADIF-MCP Specific Docs
+    url: https://adif-mcp.com/
+    about: Authoritative technical documentation for the ADIF 3.1.6 validator.
+  - name: Discussions
+    url: https://github.com/KI7MT/ki7mt-mcp-hub/discussions
+    about: For general questions, ideas, and station integration help.

@@ -1,0 +1,62 @@
+name: validate-manifest
+
+on:
+  push:
+    paths:
+      - "**/manifest.json"
+      - ".github/workflows/validate-manifest.yml"
+      - ".github/scripts/validate_manifest.py"
+  pull_request:
+    paths:
+      - "**/manifest.json"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Find manifests
+        id: find
+        shell: bash
+        run: |
+          set -euo pipefail
+          # Find all manifest.json files across all silos
+          files="$(find . -name "manifest.json" -not -path "*/.*" || true)"
+          if [ -z "$files" ]; then
+            echo "count=0" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          echo "count=$(echo "$files" | wc -l | tr -d ' ')" >> "$GITHUB_OUTPUT"
+          echo "MANIFESTS<<EOF" >> "$GITHUB_ENV"
+          echo "$files" >> "$GITHUB_ENV"
+          echo "EOF" >> "$GITHUB_ENV"
+
+      - name: Set up Python
+        if: steps.find.outputs.count != '0'
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Validate via Global Script
+        if: steps.find.outputs.count != '0'
+        run: |
+          set -euo pipefail
+          # Use the centralized script we moved to .github/scripts/
+          while IFS= read -r f; do
+            [ -z "$f" ] && continue
+            echo "🔎 Validating: $f"
+            # Extract the directory containing the manifest to pass to our script
+            DIR=$(dirname $(dirname $(dirname $(dirname "$f"))))
+            python3 .github/scripts/validate_manifest.py "$DIR"
+          done <<< "$MANIFESTS"
+
+      - name: Summary
+        if: steps.find.outputs.count != '0'
+        run: echo "✅ Validated ${{ steps.find.outputs.count }} manifest file(s) across the hub."
