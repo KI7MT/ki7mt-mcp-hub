@@ -3,8 +3,8 @@ import sys
 from pathlib import Path
 
 def validate_manifests():
+    # Set root to the repo root regardless of where script is called
     root = Path(__file__).parent.parent.parent
-    # Find all manifest.json files in any subdirectory
     manifests = list(root.glob("**/manifest.json"))
 
     if not manifests:
@@ -13,8 +13,8 @@ def validate_manifests():
 
     success = True
     for manifest_path in manifests:
-        # Skip manifests in build or temp directories if they exist
-        if "site" in str(manifest_path) or ".venv" in str(manifest_path):
+        # Avoid build artifacts or environments
+        if any(x in str(manifest_path) for x in ["site", ".venv", "temp"]):
             continue
 
         print(f"Checking: {manifest_path.relative_to(root)}")
@@ -22,12 +22,21 @@ def validate_manifests():
             with open(manifest_path, 'r') as f:
                 data = json.load(f)
 
-            # Add your specific validation logic here (checking keys, etc.)
-            if "mcp" not in data:
-                print(f"  FAILED: Missing 'mcp' key in {manifest_path.name}")
+            # These are the keys found in your adif-mcp manifest
+            required_keys = ["name", "version", "components"]
+
+            missing = [k for k in required_keys if k not in data]
+
+            if missing:
+                print(f"  FAILED: Missing required keys {missing}")
                 success = False
             else:
-                print("  PASSED")
+                # Basic check for your 'components' structure
+                if "schemas" not in data.get("components", {}):
+                    print("  FAILED: 'components' missing 'schemas' table")
+                    success = False
+                else:
+                    print(f"  PASSED (v{data['version']})")
 
         except Exception as e:
             print(f"  FAILED: Could not parse JSON: {e}")
