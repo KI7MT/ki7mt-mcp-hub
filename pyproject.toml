@@ -1,0 +1,22 @@
+[project]
+name = "ki7mt-mcp-hub"
+version = "0.1.0"
+description = "Global Documentation and MCP Hub"
+requires-python = ">=3.10"
+
+# Global Documentation Tools go here
+dependencies = [
+    "mkdocs>=1.6.1",
+    "mkdocs-material>=9.6.18",
+    "mkdocstrings[python]>=0.30.0",
+    "pymdown-extensions>=10.10",
+    "pymdown-extensions[extra]>=10.10",
+    "mkdocs-redirects>=1.2.2",
+    "mkdocs-mermaid2-plugin>=1.2.2",
+    "mkdocs-git-revision-date-localized-plugin>=1.4.7",
+]
+
+[tool.uv]
+managed = true
+# This links the silos to the root so we can build docs across them
+workspace = { members = ["adif-mcp", "wspr-mcp"] }
