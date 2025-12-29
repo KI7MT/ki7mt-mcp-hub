@@ -37,3 +37,5 @@ Our goal is simple: support and enhance the Amateur Radio logging ecosystem whil
 - **Tools:** A comprehensive [Tool Catalog](tools.md) of all available MCP functions.
 
 👉 Start with the [User Guide](userguide/persona-management.md) or setup to setup and contrubite code, see the [Dev Guide](dev/dev-env-setup.md).
+
+
