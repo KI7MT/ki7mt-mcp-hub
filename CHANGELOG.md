@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file.
 
+## 0.5.0 (2025-12-28)
+
+### 🚀 Features
+- **arch**: transition to Hub and Silo architecture for improved scalability.
+- **mcp**: updated manifest discovery to support recursive validation.
+
+### ⚙️ Chore
+- **deps**: bump `requires-python` to `>=3.12` to align with Global Hub standards.
+- **ci**: unified `pre-commit`, `sanity`, and `validate-manifest` workflows.
+
+### 📝 Documentation
+- **site**: successfully deployed global documentation to [ki7mt.io](https://ki7mt.io).
+- **readme**: modernized `adif-mcp` README for PyPI with live resource links.
+
 ## [0.4.4] - 2025-12-28
 
 ### **Added**
